@@ -1,0 +1,31 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  files-changed:
+    runs-on: ubuntu-latest
+    outputs:
+      ok: ${{ steps.main.outputs.ok }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run a multi-line script
+        id: main
+        run: |
+          ok=$(( $RANDOM % 2 ))
+          echo "ok=$ok" >> "$GITHUB_OUTPUT"
+          echo "ok=$ok" >> "$GITHUB_STEP_SUMMARY"
+
+  ready:
+    needs:
+    - files-changed
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a multi-line script
+        if: ${{ needs.files-changed.outputs.ok }}
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
