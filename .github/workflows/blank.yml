@@ -24,9 +24,9 @@ jobs:
     needs:
     - files-changed
     runs-on: ubuntu-latest
+    if: ${{ needs.files-changed.outputs.ok }}
     steps:
       - name: Run a multi-line script
-        if: ${{ needs.files-changed.outputs.ok }}
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
