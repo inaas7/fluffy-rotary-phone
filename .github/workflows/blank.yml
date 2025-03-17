@@ -15,7 +15,9 @@ jobs:
         id: main
         run: |
           ok=$(( $RANDOM % 2 ))
-          echo "ok=$ok" >> "$GITHUB_OUTPUT"
+          if [ $ok -gt 0 ]; then
+            echo "ok=$ok" >> "$GITHUB_OUTPUT"
+          fi
           echo "ok=$ok" >> "$GITHUB_STEP_SUMMARY"
 
   ready:
